@@ -13,7 +13,7 @@ class Scraper:
         self.driver_options.add_argument("--mute-audio")
         self.driver_options.add_argument('--disable-gpu')
         self.driver_options.add_argument('--disable-extensions')
-        self.driver = webdriver.Chrome('..\chromedriver.exe', options=self.driver_options) 
+        self.driver = webdriver.Chrome('.\chromedriver.exe', options=self.driver_options) 
 
 
     def open_instance_get_id(self, url, desired_XPATH):

@@ -23,10 +23,12 @@ def main():
     read_data = db.read()
     write_data = read_data
     for key, url in urls.items():
-        if read_data[key] < my_scraper.open_instance_get_id(url, xpath):
-            write_data[key] = my_scraper.open_instance_get_id(url, xpath)
+        id = my_scraper.open_instance_get_id(url, xpath)
+        if read_data[key] < id:
+            write_data[key] = id
             db.write(write_data)
-    time.sleep(2)
+    print('Sleeping... Zzzzz')
+    time.sleep(1800)
     main()
 
 
