@@ -8,16 +8,14 @@ from selenium.webdriver.chrome.options import Options
 class Scraper:
     def __init__(self):
         self.driver_options = Options()
-        self.driver_options.headless(True)
+        self.driver_options.headless =True
         self.driver = webdriver.Chrome('..\chromedriver.exe', options=self.driver_options) 
 
 
-    def open_instance(self, url):
+    def open_instance_get_id(self, url, desired_XPATH):
         self.driver.get(url)
-
-
-    def find_element_byXPATH(self, desired_XPATH):
-        self.driver.find_element(By. XPATH, desired_XPATH)
+        e = self.driver.find_element(By. XPATH, desired_XPATH)
+        return e.get_attribute('data-vacancy-id')
 
 
 ########################################################################################################
