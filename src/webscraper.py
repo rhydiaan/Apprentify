@@ -9,13 +9,17 @@ class Scraper:
     def __init__(self):
         self.driver_options = Options()
         self.driver_options.headless =True
+        self.driver_options.add_argument("--log-level=3")
+        self.driver_options.add_argument("--mute-audio")
+        self.driver_options.add_argument('--disable-gpu')
+        self.driver_options.add_argument('--disable-extensions')
         self.driver = webdriver.Chrome('..\chromedriver.exe', options=self.driver_options) 
 
 
     def open_instance_get_id(self, url, desired_XPATH):
         self.driver.get(url)
         e = self.driver.find_element(By. XPATH, desired_XPATH)
-        return e.get_attribute('data-vacancy-id')
+        return int(e.get_attribute('data-vacancy-id'))
 
 
 ########################################################################################################

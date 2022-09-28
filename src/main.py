@@ -1,20 +1,38 @@
 from webscraper import Scraper
 from utils import *
+import time
 
 urls = {
     'advanced' : 'https://www.findapprenticeship.service.gov.uk/apprenticeships?SearchField=JobTitle&Keywords=Software%20developer&Location=SA16%200EH&WithinDistance=0&ApprenticeshipLevel=Advanced&DisabilityConfidentOnly=false&Latitude=51.687928&Longitude=-4.270008&Hash=226003117&SearchMode=Keyword&Category=&LocationType=NonNational&GoogleMapApiKey=AIzaSyAg5lwS3ugdAVGf5gdgNvLe_0-7XcMICIM&sortType=RecentlyAdded&SearchAction=Sort&resultsPerPage=1&DisplayDescription=true&DisplayDistance=true&DisplayClosingDate=true&DisplayStartDate=true&DisplayApprenticeshipLevel=false&DisplayWage=true',
     'higher' : 'https://www.findapprenticeship.service.gov.uk/apprenticeships?SearchField=JobTitle&Keywords=Software%20developer&Location=SA16%200EH&WithinDistance=0&ApprenticeshipLevel=Higher&DisabilityConfidentOnly=false&Latitude=51.687928&Longitude=-4.270008&Hash=226003117&SearchMode=Keyword&Category=&LocationType=NonNational&GoogleMapApiKey=AIzaSyAg5lwS3ugdAVGf5gdgNvLe_0-7XcMICIM&sortType=RecentlyAdded&SearchAction=Sort&resultsPerPage=1&DisplayDescription=true&DisplayDistance=true&DisplayClosingDate=true&DisplayStartDate=true&DisplayApprenticeshipLevel=false&DisplayWage=true'
     }
 
+init_schema = {
+    'advanced' : 0,
+    'higher' : 0
+}
+
+xpath = '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a'
+
 
 my_scraper: Scraper = Scraper()
+db = Data('id.json', init_schema)
 
 
 def main():
-    data = {}
+    read_data = db.read()
+    write_data = read_data
     for key, url in urls.items():
-        data[key] = my_scraper.open_instance_get_id(url, '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a')
-    write_to_json(data, 'id.json')
+        if read_data[key] < my_scraper.open_instance_get_id(url, xpath):
+            write_data[key] = my_scraper.open_instance_get_id(url, xpath)
+            db.write(write_data)
+    time.sleep(2)
+    main()
+
+
+main()
+
+
 
 
 
