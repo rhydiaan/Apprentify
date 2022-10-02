@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 class Scraper:
     def __init__(self):
         self.driver_options = Options()
-        self.driver_options.headless =True
+        self.driver_options.headless = True
         self.driver_options.add_argument("--log-level=3")
         self.driver_options.add_argument("--mute-audio")
         self.driver_options.add_argument('--disable-gpu')

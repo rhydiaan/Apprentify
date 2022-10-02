@@ -1,6 +1,7 @@
 from webscraper import Scraper
 from utils import *
 import time
+import requests
 
 urls = {
     'advanced' : 'https://www.findapprenticeship.service.gov.uk/apprenticeships?SearchField=JobTitle&Keywords=Software%20developer&Location=SA16%200EH&WithinDistance=0&ApprenticeshipLevel=Advanced&DisabilityConfidentOnly=false&Latitude=51.687928&Longitude=-4.270008&Hash=226003117&SearchMode=Keyword&Category=&LocationType=NonNational&GoogleMapApiKey=AIzaSyAg5lwS3ugdAVGf5gdgNvLe_0-7XcMICIM&sortType=RecentlyAdded&SearchAction=Sort&resultsPerPage=1&DisplayDescription=true&DisplayDistance=true&DisplayClosingDate=true&DisplayStartDate=true&DisplayApprenticeshipLevel=false&DisplayWage=true',
@@ -27,9 +28,20 @@ def main():
         if read_data[key] < id:
             write_data[key] = id
             db.write(write_data)
+            send_notification(key)
     print('Sleeping... Zzzzz')
     time.sleep(1800)
     main()
+
+
+def send_notification(level):
+    request = {
+        
+    "title":"Oi! There's a new apprenticeship!",
+    "content":f"The new apprenticeship level is: {level}"
+    
+    }
+    return requests.post(url='http://192.168.1.200:8080/notification', data=json.dumps(request))
 
 
 main()
