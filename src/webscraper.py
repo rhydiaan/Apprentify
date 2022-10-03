@@ -4,6 +4,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
+import time
+
+path_to_driver = './chromedriver.exe'
 
 class Scraper:
     def __init__(self):
@@ -13,8 +16,15 @@ class Scraper:
         self.driver_options.add_argument("--mute-audio")
         self.driver_options.add_argument('--disable-gpu')
         self.driver_options.add_argument('--disable-extensions')
-        self.driver = webdriver.Chrome('.\chromedriver.exe', options=self.driver_options) 
+        self.driver = webdriver.Chrome(path_to_driver, options=self.driver_options) 
 
+
+    def find_time_from_me(self, url, click_XPATH, time_xpath):
+        self.driver.get(url)
+        self.driver.find_element(By. XPATH, click_XPATH).click()
+        time.sleep(0.3)
+        e = self.driver.find_element(By. XPATH, time_xpath)
+        return e.text
 
     def open_instance_get_id(self, url, desired_XPATH):
         self.driver.get(url)
