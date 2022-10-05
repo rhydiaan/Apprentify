@@ -26,6 +26,11 @@ class Scraper:
         e = self.driver.find_element(By. XPATH, time_xpath)
         return e.text
 
+    def find_element_text(self, url, full_xpath):
+        self.driver.get(url)
+        e = self.driver.find_element(By. XPATH, full_xpath)
+        return e.text
+
     def open_instance_get_id(self, url, desired_XPATH):
         self.driver.get(url)
         e = self.driver.find_element(By. XPATH, desired_XPATH)

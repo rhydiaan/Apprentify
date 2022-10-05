@@ -13,9 +13,12 @@ init_schema = {
     'higher' : 0
 }
 
-id_xpath = '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a'
-jt_click_xpath = '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/a'
-time_xpath = '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/div/span'
+xpath = {wage: '', id: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a',
+jt_click: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/a',
+time: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/div/span',
+wage: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[5]/text()'
+}
+
 
 my_scraper: Scraper = Scraper()
 db = Data('id.json', init_schema)
@@ -25,21 +28,21 @@ def main():
     read_data = db.read()
     write_data = read_data
     for key, url in urls.items():
-        id = my_scraper.open_instance_get_id(url, id_xpath)
+        id = my_scraper.open_instance_get_id(url, xpath[id])
         if read_data[key] < id:
             write_data[key] = id
             db.write(write_data)
-            send_notification(key, my_scraper.find_time_from_me(url, jt_click_xpath, time_xpath))
+            send_notification(key, my_scraper.find_time_from_me(url, xpath[jt_click], xpath[time]), my_scraper.find_element_text(url, xpath[wage]))
     print('Sleeping... Zzzzz')
     time.sleep(1800)
     main()
 
 
-def send_notification(level, time_to_location):
+def send_notification(level, time_to_location, wage):
     request = {
         
     "title":f"Oi! New apprenticeship {time_to_location} away!",
-    "content":f"The new apprenticeship level is: {level}"
+    "content":f"Level: {level} Wage: {wage}"
     
     }
     return requests.post(url='http://192.168.1.200:8080/notification', data=json.dumps(request))
