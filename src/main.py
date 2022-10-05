@@ -28,7 +28,7 @@ def main():
     read_data = db.read()
     write_data = read_data
     for key, url in urls.items():
-        id = my_scraper.open_instance_get_id(url, xpath[id])
+        id = my_scraper.open_instance_get_id(url, xpath['id'])
         if read_data[key] < id:
             write_data[key] = id
             db.write(write_data)
