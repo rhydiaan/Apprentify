@@ -13,7 +13,7 @@ init_schema = {
     'higher' : 0
 }
 
-xpath = {wage: '', id: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a',
+xpath = {id: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a',
 jt_click: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/a',
 time: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/div/span',
 wage: '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[5]/text()'
