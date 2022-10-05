@@ -32,7 +32,7 @@ def main():
         if read_data[key] < id:
             write_data[key] = id
             db.write(write_data)
-            send_notification(key, my_scraper.find_time_from_me(url, xpath[jt_click], xpath[time]), my_scraper.find_element_text(url, xpath[wage]))
+            send_notification(key, my_scraper.find_time_from_me(url, xpath['jt_click'], xpath['time']), my_scraper.find_element_text(url, xpath['wage']))
     print('Sleeping... Zzzzz')
     time.sleep(1800)
     main()
