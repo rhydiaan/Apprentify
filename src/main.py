@@ -13,10 +13,10 @@ init_schema = {
     'higher' : 0
 }
 
-xpath = {'id': '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/h2/a',
-'jt_click' : '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/a',
-'time' : '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/div/span',
-'wage' : '/html/body/div[4]/main/div[3]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[5]'
+xpath = {'id': '/html/body/div[4]/main/div[2]/div[2]/form/section[2]/div/ul/li/h2/a',
+'jt_click' : '/html/body/div[4]/main/div[2]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/a',
+'time' : '/html/body/div[4]/main/div[2]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[1]/div/span',
+'wage' : '/html/body/div[4]/main/div[2]/div[2]/form/section[2]/div/ul/li/div/div[1]/ul/li[5]'
 }
 
 
@@ -40,11 +40,10 @@ def main():
 
 def send_notification(level, time_to_location, wage):
     request = {
-        
     "title":f"Oi! New apprenticeship {time_to_location} away!",
     "content":f"Level: {level.title()} {wage}"
-    
     }
+    print("Notification sent.")
     return requests.post(url='http://192.168.1.200:8080/notification', data=json.dumps(request))
 
 
